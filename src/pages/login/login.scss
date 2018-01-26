@@ -1,0 +1,147 @@
+page-login {
+  .bg-login {
+    position: relative;
+    padding-bottom: 55px;
+    padding-top: 60px;
+    min-height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../assets/imgs/bg_login.jpg");
+    &:after {
+      content: '';
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      background: rgba(0,0,0,0.2);
+    }
+  }
+
+
+  .create-account {
+    width: 100%;
+    line-height: 55px;
+    background: rgba(36,178,86,0.85);
+    z-index: 1;
+    display: block;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+  }
+
+
+  .form-content {
+    max-width: 330px;
+    margin: auto;
+    padding: 25px;
+    position: relative;
+    z-index: 1;
+
+    .logo {
+      position: relative;
+      font-size: 25px;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 45px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      margin-top: -25px;
+      >span {
+        position: absolute;
+        top: -9px;
+        left: 7px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+
+    .form-group {
+      margin-bottom: 30px;
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.95);
+      &.phone{
+        input{
+          padding: 0 10px 0 62px;
+        }
+      }
+      .seven{
+        z-index: 1;
+        display: block;
+        position: absolute;
+        left: 45px;
+        top: 1px;
+        height: 44px;
+        line-height: 44px;
+        div{
+          display: inline-block;
+          font-size: inherit;
+          line-height: 16px;
+        }
+      }
+      span:not(.seven) {
+        z-index: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 45px;
+        text-align: center;
+        line-height: 47px;
+        color: #175ADE;
+        background: none;
+      }
+      input{
+        margin: 0;
+        width: 100%;
+        height: 45px;
+        border: none;
+        padding: 0 10px 0 50px;
+        color: #33336E;
+        &:focus {
+          background: #fff;
+        }
+      }
+
+    }
+
+    input::-webkit-input-placeholder {color:#4A566B;}
+    .form-footer {
+      .link {
+        position: relative;
+        top: 12px;
+        padding-left: 5px;
+        color: #fff;
+      }
+      button {
+        &[disabled] {
+          cursor: default;
+          opacity: .6;
+          pointer-events: none;
+        }
+        padding: 13px 30px;
+        border-radius: 25px;
+        background: #175ADE;
+        color: #fff;
+        font-weight: 500;
+        float: right;
+        opacity: 0.9;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+  }
+
+
+
+}

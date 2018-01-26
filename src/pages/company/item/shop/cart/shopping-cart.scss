@@ -1,0 +1,139 @@
+shopping-cart{
+  .scroll-content{
+    transform: translateZ(0px);
+    transition-duration: 0ms;
+  }
+
+  .tabs-buy {
+    position: fixed;
+    bottom: 0;left: 0;right: 0;
+    background: #eee;
+    border-top: solid 1px #eee;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 15px;
+    &.min-price{
+      height: 80px;
+    }
+
+    .min-price-er{
+      line-height: 16px;
+      margin-top: 4px;
+      text-align: center;
+    }
+  }
+
+  .buy-result {
+    float: left;
+    font-size: 25px;
+    height: 60px;
+    color: #000;
+    font-weight: 300;
+  }
+
+  .buy-result > small {
+    font-weight: 500;
+    font-size: 14px;
+    margin-left: 5px;
+  }
+
+  .buy-next {
+    float: right;
+  }
+
+  .buy-next > button {
+    padding: 10px 20px;
+    background: #0380FF;
+    color: #fff;
+    border-radius: 5px;
+  }
+  .grid{
+    padding: 0;
+    position: relative;
+    right: -1px;
+    width: calc(100% + 1px);
+  }
+  .ip-company{
+    position: relative;
+    padding: 15px;
+    padding-left: 120px;
+    border-bottom: solid 1px #f5f5f5;
+    border-right: solid 1px #f5f5f5;
+    .ip-img{
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      .ip-fon{
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+    .ip-title{
+      font-size: 14px;
+      width: 100%;
+      height: 36px;
+      overflow: hidden;
+      font-weight: 500;
+      color: #000;
+      margin-bottom: 5px;
+    }
+    .ip-pb-footer{
+      display: flex;
+      justify-content: space-between;
+      .ip-price{
+        text-align: left;
+        font-size: 18px;
+        line-height: 27px;
+        position: relative;
+        small{
+          text-decoration: line-through;
+          position: absolute;
+          left: 0;
+          top: 3px;
+        }
+        span{
+          margin-left: 5px;
+          color: #488aff;
+          font-weight: 300;
+        }
+      }
+      .ip-buttons{
+        width: 120px;
+        display: flex;
+        .number{
+          background-color: #e7e7e7;
+          padding: 0 10px;
+          height: 27px;
+          font-weight: 500;
+          font-size: 16px;
+          display: block;
+          line-height: 27px;
+          margin: 0;
+          border-radius: 2px;
+          width: 100%;
+          text-align: center;
+        }
+        button{
+          text-transform: uppercase;
+          height: 27px;
+          margin: 0;
+          box-shadow: none;
+          &.minus, &.plus{
+            padding: 0 10px;
+            width: 32px;
+            font-size: 22px;
+            .button-inner{
+              position: relative;
+              top: 0;
+              line-height: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

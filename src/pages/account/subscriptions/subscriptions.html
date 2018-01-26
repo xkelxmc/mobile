@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Подписки</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="subscriptionsList">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!subscriptionsList" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="subscriptionsList">
+    <div *ngIf="subscriptionsList.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{subscriptionsList.events[0].text}}</div>
+    </div>
+    <div *ngIf="subscriptionsList.status == 'ok'">
+      <div *ngIf="!subscriptionsList.data || subscriptionsList.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{subscriptionsList.events[0].text}}</div>
+      </div>
+      <div *ngIf="subscriptionsList.data && subscriptionsList.data.length > 0">
+        <a href="#" class="item-sub" *ngFor="let sub of subscriptionsList.data; let i = index">
+          <div class="img" [ngStyle]="{'background-image': 'url('+ sub.logo +')'}"></div>
+          <div class="info">
+            <div>{{sub.name}}</div>
+            <span>{{sub.discount_info}}</span>
+          </div>
+          <button (click)="toggleSubscribe(sub.id, i)" *ngIf="sub.subscribe == 1">
+            Отписаться
+          </button>
+          <button (click)="toggleSubscribe(sub.id, i)" [class.subscribe]="sub.subscribe == 0"  *ngIf="sub.subscribe == 0">
+            Подписаться
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

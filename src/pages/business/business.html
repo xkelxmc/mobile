@@ -1,0 +1,162 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Бизнес</ion-title>
+  </ion-navbar>
+  <ion-toolbar class="toolbar-main">
+    <ion-segment [(ngModel)]="currentPage" color="secondary">
+      <ion-segment-button value="fina">
+        <span>
+          Финансы
+        </span>
+      </ion-segment-button>
+      <ion-segment-button value="back">
+        <span>
+          Вывод
+        </span>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="pro-header">
+
+    <!--<div class="blur"><img src="https://legendcity.ru/api/resize_crop.php?type=usercrop&id={{userData.id}}"></div>-->
+    <div class="blur"><img src="assets/imgs/city-bg.png"></div>
+    <div class="profile-info" *ngIf="userInfo && userInfo.data">
+
+      <div class="avatar"
+           [ngStyle]="{'background-image': 'url('+ userInfo.data.business_img +')'}"></div>
+      <span>{{userInfo.data.business_name}}</span>
+      <small>
+        <ion-icon name="card"></ion-icon>
+        {{userInfo.data.money}} Руб.
+      </small>
+    </div>
+  </div>
+
+  <div [ngSwitch]="currentPage">
+
+    <div *ngSwitchCase="'fina'">
+      <div *ngIf="!moneyList" class="center ev-text">
+        <div class="ev-vertical">
+          <ion-spinner></ion-spinner>
+        </div>
+      </div>
+      <div *ngIf="moneyList" class="inner-bg">
+        <div *ngIf="moneyList.status == 'error'" class="center ev-text">
+          <div class="ev-vertical">{{moneyList.events[0].text}}</div>
+        </div>
+        <div *ngIf="moneyList.status == 'ok'">
+          <div *ngIf="!moneyList.data || moneyList.data.length == 0" class="center ev-text">
+            <div class="ev-vertical">{{moneyList.events[0].text}}</div>
+          </div>
+          <div *ngIf="moneyList.data && moneyList.data.length > 0">
+            <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="moneyList">
+              <ion-refresher-content></ion-refresher-content>
+            </ion-refresher>
+            <div class="pro-content">
+              <a class="item-history" *ngFor="let item of moneyList.data">
+                <div *ngIf="item.logo" class="img" [ngStyle]="{'background-image': 'url('+ item.logo +')'}"></div>
+                <div class="info">
+                  <div class="date">{{item.date}}</div>
+                  <div class="name">{{item.comment}}</div>
+                  <div class="result {{item.money > 0 ? 'plus' : item.money == 0 ? 'zerro' : 'minus'}}">
+                    <span *ngIf="item.money != 0">{{item.money > 0 ? '+' : '-'}}</span>{{item.money}} Руб.
+                  </div>
+                </div>
+              </a>
+              <div class="btn-all" (click)="getAllHistory()" *ngIf="showAllMoneyBtn && countMoney>= limitMoney">Показать
+                всю историю
+              </div>
+
+            </div>
+            <ion-infinite-scroll #infscroll (ionInfinite)="doInfinite($event)" *ngIf="showAllMoney">
+              <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'back'">
+
+      <div class="pro-menu clearfix">
+        <a (click)="payments_list()" class="item">
+          <div>
+            <ion-icon name="list-box"></ion-icon>
+          </div>
+          <span>Мои счета</span>
+        </a>
+        <a (click)="openTypeInfo()" class="item">
+          <div>
+            <ion-icon name="download"></ion-icon>
+          </div>
+          <span>Вывести</span>
+        </a>
+      </div>
+      <div *ngIf="!paymentsList" class="center ev-text">
+        <div class="ev-vertical">
+          <ion-spinner></ion-spinner>
+        </div>
+      </div>
+      <div *ngIf="paymentsList" class="inner-bg">
+        <div *ngIf="paymentsList.status == 'error'" class="center ev-text">
+          <div class="ev-vertical">{{paymentsList.events[0].text}}</div>
+        </div>
+        <div *ngIf="paymentsList.status == 'ok'">
+          <div *ngIf="!paymentsList.data || paymentsList.data.length == 0" class="center ev-text">
+            <div class="ev-vertical">{{paymentsList.events[0].text}}</div>
+          </div>
+          <div *ngIf="paymentsList.data && paymentsList.data.length > 0">
+
+            <ion-refresher (ionRefresh)="doRefreshPayments($event)" *ngIf="paymentsList">
+              <ion-refresher-content></ion-refresher-content>
+            </ion-refresher>
+            <div class="pro-content">
+              <a class="item-history" *ngFor="let item of paymentsList.data">
+                <div class="img" [ngStyle]="{'background-image': 'url('+ item.logo +')'}">
+                  <div [ngSwitch]="item.state">
+                    <div *ngSwitchCase="'new'"><span style="background: #ccc;"></span></div>
+                    <div *ngSwitchCase="'progress'"><span style="background: #ff6f00;"></span></div>
+                    <div *ngSwitchCase="'complete'"><span style="background: #2e7d32;"></span></div>
+                    <div *ngSwitchCase="'cancel'"><span style="background: #d32f2f;"></span></div>
+                  </div>
+                </div>
+                <div class="info">
+                  <div class="date">Создано: {{item.date}}</div>
+                  <div class="name">{{item.type_name}} {{item.number}}</div>
+                  <div class="result">
+                    {{item.money}} Руб.
+                  </div>
+                  <div class="state-b">
+                    <div [ngSwitch]="item.state">
+                      <div *ngSwitchCase="'new'"><span style="color: #424242; font-weight: 500;">Новый</span></div>
+                      <div *ngSwitchCase="'progress'"><span style="color: #ff6f00; font-weight: 500;">В обработке</span>
+                      </div>
+                      <div *ngSwitchCase="'complete'"><span style="color: #2e7d32; font-weight: 500;">Выплачено</span>
+                      </div>
+                      <div *ngSwitchCase="'cancel'"><span style="color: #d32f2f; font-weight: 500;">Отклонено</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="btn-all" (click)="getAllHistoryPayments()"
+                   *ngIf="showAllPaymentsBtn && countPayments>= limitPayments">
+                Показать всю историю
+              </div>
+            </div>
+            <ion-infinite-scroll #infscroll (ionInfinite)="doInfinitePayments($event)" *ngIf="showAllPayments">
+              <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

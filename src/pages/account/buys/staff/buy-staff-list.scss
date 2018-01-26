@@ -1,0 +1,89 @@
+buy-staff-list{
+  .toolbar-ios {
+    height: 44px + $cordova-ios-statusbar-padding;
+    padding-top: $cordova-ios-statusbar-padding;
+  }
+
+  .ios-header .toolbar-title-ios {
+    padding-top: $cordova-ios-statusbar-padding;
+  }
+  .item-sub {
+    padding: 10px 15px 15px;
+    display: block;
+    position: relative;
+    border-bottom: solid 1px #eee;
+    .img {
+      z-index: 1;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      .star {
+        position: absolute;
+        bottom: -19px;
+        right: -10px;
+        width: 35px;
+        height: 35px;
+        border-radius: 25px;;
+        border: solid 4px #fff;
+        text-align: center;
+        background: #F2A703;
+        small {
+          color: #fff;
+          font-size: 11px;
+          font-weight: 600;
+          line-height: 28px;
+        }
+        span {
+          position: absolute;
+          right: -70px;
+          top: 7px;
+          font-size: 11px;
+
+        }
+      }
+    }
+    .info {
+      padding-left: 80px;
+      position: relative;
+      height: 70px;
+      top: 5px;
+      div {
+        font-weight: 500;
+        font-size: 15px;
+      }
+      span {
+        color: #444444;
+        font-size: 12px;
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-top: 5px;
+      }
+    }
+
+    .right-block{
+      position: absolute;
+      right: 15px;
+      top: 29px;
+      button {
+        background: none;
+        border: solid 1px #eee;
+        border-radius: 5px;
+        padding: 6px 10px;
+        &.blue{
+          color: #ffffff;
+          background-color: #3F88F9;
+        }
+      }
+
+    }
+    .sub {
+      background: #2153DA;
+      color: #fff;
+    }
+  }
+}

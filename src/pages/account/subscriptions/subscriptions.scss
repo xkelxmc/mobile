@@ -1,0 +1,53 @@
+page-subscriptions{
+  .item-sub {
+    padding: 20px 15px;
+    display: block;
+    position: relative;
+    border-bottom: solid 1px #eee;
+    padding-bottom: 30px;
+    .img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+    }
+    .info {
+      padding-left: 60px;
+      position: relative;
+      top: 5px;
+      div {
+        font-weight: 500;
+        font-size: 15px;
+      }
+      span {
+        color: #444444;
+        font-size: 12px;
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-top: 5px;
+      }
+    }
+
+    button {
+      position: absolute;
+      right: 15px;
+      top: 29px;
+      background: none;
+      border: solid 1px #eee;
+      border-radius: 5px;
+      padding: 6px 10px;
+      &.subscribe{
+        color: #ffffff;
+        background-color: #3F88F9;
+      }
+    }
+    .sub {
+      background: #2153DA;
+      color: #fff;
+    }
+  }
+}

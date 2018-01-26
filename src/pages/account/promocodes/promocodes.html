@@ -1,0 +1,200 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Промокоды</ion-title>
+  </ion-navbar>
+  <ion-toolbar class="toolbar-main">
+    <ion-segment [(ngModel)]="currentPage" color="secondary">
+      <ion-segment-button value="active">
+        <span>
+          Мои
+        </span>
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        <span>
+          Остальные
+        </span>
+      </ion-segment-button>
+      <ion-segment-button value="use">
+        <span>
+          Активировать
+        </span>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="promocodesList">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!promocodesList" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="promocodesList" class="inner-bg">
+    <div *ngIf="promocodesList.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{promocodesList.events[0].text}}</div>
+    </div>
+    <div *ngIf="promocodesList.status == 'ok'">
+      <div *ngIf="!promocodesList.data || promocodesList.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{promocodesList.events[0].text}}</div>
+      </div>
+      <div *ngIf="promocodesList.data && promocodesList.data.length > 0">
+        <div [ngSwitch]="currentPage">
+          <div *ngSwitchCase="'active'">
+            <div *ngFor="let promo of promocodesList.data; let i = index">
+              <div class="sert" *ngIf="promo.key">
+                <a (click)="openCompany(promo.org_id)" class="img">
+                  <div class="blur"><img src="{{promo.org_header_picture}}"></div>
+                  <div class="ava" [ngStyle]="{'background-image': 'url('+ promo.org_logo +')'}"></div>
+                  <div class="title">{{promo.org_name}}</div>
+                </a>
+                <div class="post">
+                  <h2>{{promo.name}}</h2>
+                  <div class="text">
+                    {{promo.description}}
+                  </div>
+                  <div class="key-block">
+                    <ion-item class="key">
+                      {{promo.key}}
+                    </ion-item>
+                    <div class="key-info">
+                      Отпавьте этот код другу, что бы получить подарок.
+                    </div>
+                    <button ion-button small style="margin-top: 10px;" (click)="sendSMS(promo.key)">
+                      Отправить
+                      <ion-icon name="ios-paper-plane"></ion-icon>
+                    </button>
+                  </div>
+                  <div class="key-get">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col col-6>
+                          <h3>Вы получаете</h3>
+                          <div *ngIf="promo.type == 1 || promo.type == 2" class="key-bonus">
+                            {{promo.count_give_bonus_from}} Руб.
+                          </div>
+                          <div class="key-cert" *ngIf="promo.type == 3">
+                            <img src="{{promo.cert_org_logo}}"> <br>
+                            Сертификат
+                          </div>
+                        </ion-col>
+                        <ion-col col-6>
+                          <h3>Друг получает</h3>
+                          <div *ngIf="promo.type == 1 || promo.type == 3" class="key-bonus">
+                            {{promo.count_give_bonus_to}} Руб.
+                          </div>
+                          <div class="key-cert" *ngIf="promo.type == 2">
+                            <img src="{{promo.cert_org_logo}}"> <br>
+                            Сертификат
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row *ngIf="promo.type == 4">
+                        <ion-col col-12>
+                          <div class="key-cert" style="text-align: center;">
+                            <img src="{{promo.cert_org_logo}}" style="vertical-align: middle;">
+                            Сертификат
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+
+                    <div *ngIf="promo.back_money_lvl !== false" class="key-cashback">
+                      <div class="key-cashback-header">
+                        Кэшбек:
+                      </div>
+                      <div *ngFor="let lvl of promo.back_money_lvl; let ind = index">
+                        {{ind+1}} Уровень: {{lvl}}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'all'">
+            <div *ngFor="let promo of promocodesList.data; let i = index">
+              <div class="sert" *ngIf="!promo.key">
+                <a (click)="openCompany(promo.org_id)" class="img">
+                  <div class="blur"><img src="{{promo.org_header_picture}}"></div>
+                  <div class="ava" [ngStyle]="{'background-image': 'url('+ promo.org_logo +')'}"></div>
+                  <div class="title">{{promo.org_name}}</div>
+                </a>
+                <div class="post">
+                  <h2>{{promo.name}}</h2>
+                  <div class="text">
+                    {{promo.description}}
+                  </div>
+                  <div class="text">
+                    {{promo.text_for_sell}}
+                  </div>
+                  <div class="key-get">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col col-6>
+                          <h3>Вы получаете</h3>
+                          <div *ngIf="promo.type == 1 || promo.type == 2" class="key-bonus">
+                            {{promo.count_give_bonus_from}} Руб.
+                          </div>
+                          <div class="key-cert" *ngIf="promo.type == 3">
+                            <img src="{{promo.cert_org_logo}}"> <br>
+                            Сертификат
+                          </div>
+                        </ion-col>
+                        <ion-col col-6>
+                          <h3>Друг получает</h3>
+                          <div *ngIf="promo.type == 1 || promo.type == 3" class="key-bonus">
+                            {{promo.count_give_bonus_to}} Руб.
+                          </div>
+                          <div class="key-cert" *ngIf="promo.type == 2">
+                            <img src="{{promo.cert_org_logo}}"> <br>
+                            Сертификат
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row *ngIf="promo.type == 4">
+                        <ion-col col-12>
+                          <div class="key-cert" style="text-align: center;">
+                            <img src="{{promo.cert_org_logo}}" style="vertical-align: middle;">
+                            Сертификат
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+
+                    <div *ngIf="promo.back_money_lvl !== false" class="key-cashback">
+                      <div class="key-cashback-header">
+                        Кэшбек:
+                      </div>
+                      <div *ngFor="let lvl of promo.back_money_lvl; let ind = index">
+                        {{ind+1}} Уровень: {{lvl}}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'use'">
+            <div class="sert">
+              <div class="post">
+                <div class="text">
+                  Введите полученый вам промокод для получения подарка!
+                </div>
+                <ion-item>
+                  <ion-input type="text" placeholder="Промокод:" [(ngModel)]="userData.promo"></ion-input>
+                </ion-item>
+                <button ion-button block (click)="submitPromo()" [disabled]="userData.promo == ''">Активировать</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

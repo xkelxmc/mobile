@@ -1,0 +1,73 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Корзина</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only class="bar-cart" (click)="removeAll()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Потяните для обновления"
+      refreshingText="Обновление...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!shopItems" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="shopItems">
+    <div *ngIf="shopItems.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{shopItems.events[0].text}}</div>
+    </div>
+    <div *ngIf="shopItems.status == 'ok'">
+      <div *ngIf="shopItems.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{shopItems.events[0].text}}</div>
+      </div>
+
+      <div *ngIf="shopItems.data && shopItems.data.items && shopItems.data.items.length > 0">
+
+        <div class="ip-company" *ngFor="let item of shopItems.data.items; let i = index">
+          <div class="ip-img">
+            <div [ngStyle]="{'background-image': 'url(' + item.url + ')'}" class="ip-fon"></div>
+          </div>
+          <div class="ip-title">
+            {{item.name}}
+          </div>
+          <div class="ip-pb-footer">
+            <div class="ip-price">
+              <span>{{item.price}} Руб.</span>
+            </div>
+            <div class="ip-buttons" *ngIf="!shoppingCard || shoppingCard.items[item.id] == undefined">
+              <button ion-button block small (click)="addToCart(item.id, item.price)">Заказать</button>
+            </div>
+            <div class="ip-buttons" *ngIf="shoppingCard && shoppingCard.items[item.id]">
+              <button ion-button small class="minus" (click)="removeFromCart(item.id)">-</button>
+              <span class="number">{{shoppingCard.items[item.id].count}}</span>
+              <button ion-button small class="plus" (click)="addToCart(item.id, item.price)">+</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tabs-buy" *ngIf="shopItems && shopItems.data && shoppingCard && shopItemsIds.length > 0" [class.min-price]="shopItems.data.company && shopItems.data.company.MIN_SHOP_PRICE > shoppingCard.price">
+    <div class="min-price-er" *ngIf="shopItems.data.company && shopItems.data.company.MIN_SHOP_PRICE > shoppingCard.price">
+      Минимальна сумма заказа {{shopItems.data.company.MIN_SHOP_PRICE}} руб.
+    </div>
+    <div class="buy-result" style="font-weight: 500;color: #0380FF;">
+      {{shoppingCard.price}}
+      <small>руб.</small>
+    </div>
+    <div class="buy-next">
+      <button [disabled]="!shopItems.data.company || shopItems.data.company.MIN_SHOP_PRICE > shoppingCard.price" (click)="openOrder()">Купить</button>
+    </div>
+  </div>
+</ion-content>

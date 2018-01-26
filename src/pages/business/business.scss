@@ -1,0 +1,200 @@
+page-business {
+  .pro-header {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 0px 0px 70px 70px rgba(0,0,0,0.55);
+    }
+    .blur {
+      //filter: blur(7px);
+      position: absolute;
+      left: -15px;
+      right: -15px;
+      top: -15px;
+      bottom: -15px;
+      img {
+        width: 100%;
+      }
+    }
+    .profile-info {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1;
+      .avatar {
+        height: 70px;
+        width: 70px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50%;
+      }
+      .icons {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        a {
+          font-size: 20px;
+          background: rgba(0,0,0,0.5);
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          line-height: 43px;
+          border-radius: 50%;
+          position: relative;
+          float: left;
+          display: block;
+          color: #fff;
+          margin-left: 10px;
+        }
+      }
+      span {
+        display: block;
+        color: #fff;
+        margin-top: 5px;
+        margin-bottom: 2px;
+        font-size: 18px;
+      }
+      small {
+        display: inline-block;
+        background: rgba(255,255,255,0.6);
+        border-radius: 2px;
+        padding: 0 5px;
+        padding-bottom: 1px;
+        font-size: 16px;
+        font-weight: 500;
+        ion-icon {
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
+  }
+
+  .pro-menu {
+    padding: 10px 5px;
+    background: #EDEEF0;
+    .item {
+      float: left;
+      width: 50%;
+      padding: 0 5px;
+      text-align: center;
+      position: relative;
+      div {
+        background: #fff;
+        padding-top: 17px;
+        padding-bottom: 7px;
+        font-size: 30px;
+        border-radius: 3px 3px 0 0;
+        position: relative;
+        ion-icon {
+          height: 33px;
+          line-height: 35px;
+          color: #3F88F9;
+        }
+        small {
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          color: #fff;
+          z-index: 1;
+          background: #f44336;
+          height: 25px;
+          width: 25px;
+          line-height: 25px;
+          font-size: 11px;
+          border-radius: 0 3px;
+        }
+      }
+      span {
+        display: block;
+        background: #fff;
+        border-top: solid 1px #eee;
+        color: #444444;
+        padding: 5px;
+        border-radius: 0 0 3px 3px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 10px;
+      }
+    }
+  }
+  .pro-content {
+    position: relative;
+    padding: 20px;
+    padding-top: 0;
+    .item-history {
+      display: block;
+      position: relative;
+      padding: 10px 0;
+      border-bottom: solid 1px #eee;
+      .img {
+        position: absolute;
+        height: 40px;
+        width: 40px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        top: 17px;
+        span {
+          position: absolute;
+          bottom: -5px;
+          right: -5px;
+          border: solid 2px #fff;
+          height: 20px;
+          width: 20px;
+          font-size: 12px;
+          border-radius: 50%;
+          background: #ccc;
+          color: #fff;
+          text-align: center;
+          line-height: 18px;
+        }
+      }
+      .state-b{
+        position: absolute;
+        right: 0;
+        bottom: 4px;
+      }
+      .info {
+        padding-left: 55px;
+      }
+
+      .date {
+        font-size: 12px;
+        color: #636363;
+      }
+      .name {
+        text-transform: uppercase;
+        color: #000;
+        font-size: 12px;
+        margin: 5px 0;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+
+      .minus{
+        color: #ca2e2e;
+      }
+      .plus{
+        color: #44A330;
+      }
+      .zerro{
+        color: #424242;
+      }
+      .result {
+        font-size: 20px;
+        font-weight: 300;
+      }
+
+    }
+  }
+}

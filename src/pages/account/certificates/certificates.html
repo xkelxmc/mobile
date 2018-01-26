@@ -1,0 +1,120 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Сертификаты</ion-title>
+  </ion-navbar>
+  <ion-toolbar class="toolbar-main">
+    <ion-segment [(ngModel)]="currentPage" color="secondary">
+      <ion-segment-button value="active">
+        <span>
+          Активны
+        </span>
+      </ion-segment-button>
+      <ion-segment-button value="use">
+        <span>
+          Использованы
+        </span>
+      </ion-segment-button>
+      <ion-segment-button value="die" style="display:none;">
+        <span>
+          Просрочены
+        </span>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="certificatesList">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!certificatesList" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="certificatesList" class="inner-bg">
+    <div *ngIf="certificatesList.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{certificatesList.events[0].text}}</div>
+    </div>
+    <div *ngIf="certificatesList.status == 'ok'">
+      <div *ngIf="!certificatesList.data || certificatesList.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{certificatesList.events[0].text}}</div>
+      </div>
+      <div *ngIf="certificatesList.data && certificatesList.data.length > 0">
+        <div [ngSwitch]="currentPage">
+          <div *ngSwitchCase="'active'">
+            <div *ngFor="let cert of certificatesList.data; let i = index">
+              <div class="sert" *ngIf="cert.active == 1 && cert.active_date == 1">
+                <a (click)="openCertificate(cert.id)" class="img">
+                  <div class="blur"><img src="{{cert.header_picture}}"></div>
+                  <div class="ava" [ngStyle]="{'background-image': 'url('+ cert.logo +')'}"></div>
+                  <div class="title">{{cert.org_name}}</div>
+                </a>
+                <a (click)="openCertificate(cert.id)" class="post">
+                  <span>{{cert.name}}</span>
+                  <div class="text">
+                    {{cert.description}}
+                  </div>
+                  <div class="foot clearfix">
+                    <div [ngStyle]="{'background-color': colors[cert.date_end_color]}" class="float-left">Дейсвует до
+                      {{cert.date_end}}.
+                    </div>
+                    <div class="float-right green">Подробнее</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'use'">
+            <div *ngFor="let cert of certificatesList.data; let i = index">
+            <div class="sert" *ngIf="cert.active == 0">
+              <a (click)="openCompany(cert.org_id)" class="img">
+                <div class="blur"><img src="{{cert.header_picture}}"></div>
+                <div class="ava" [ngStyle]="{'background-image': 'url('+ cert.logo +')'}"></div>
+                <div class="title">{{cert.org_name}}</div>
+              </a>
+              <a (click)="openCertificate(cert.id)" class="post">
+                <span>{{cert.name}}</span>
+                <div class="text">
+                  {{cert.description}}
+                </div>
+                <div class="foot clearfix">
+                  <div style="background-color: #3F88F9;" class="float-left">Использован
+                  </div>
+                  <div class="float-right green">Подробнее</div>
+                </div>
+              </a>
+            </div>
+          </div>
+          </div>
+          <div *ngSwitchCase="'die'" style="display:none;">
+            <div *ngFor="let cert of certificatesList.data; let i = index">
+              <div class="sert" *ngIf="cert.active == 1 && cert.active_date == 0">
+                <a (click)="openCompany(cert.org_id)" class="img">
+                  <div class="blur"><img src="{{cert.header_picture}}"></div>
+                  <div class="ava" [ngStyle]="{'background-image': 'url('+ cert.logo +')'}"></div>
+                  <div class="title">{{cert.org_name}}</div>
+                </a>
+                <a (click)="openCertificate(cert.id)" class="post">
+                  <span>{{cert.name}}</span>
+                  <div class="text">
+                    {{cert.description}}
+                  </div>
+                  <div class="foot clearfix">
+                    <div style="background-color: #3F88F9;" class="float-left">Закончился
+                      {{cert.date_end}}.
+                    </div>
+                    <div class="float-right green">Подробнее</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ion-content>
+

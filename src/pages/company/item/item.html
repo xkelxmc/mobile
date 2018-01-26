@@ -1,0 +1,200 @@
+<ion-header>
+
+
+  <ion-navbar>
+    <ion-title>Компания</ion-title>
+    <ion-buttons end *ngIf="itemCompany && itemCompany.online_shop == 1 && userAuth">
+      <button ion-button icon-only class="bar-cart" (click)="openShoppingCart()">
+        <span class="count" *ngIf="shoppingCard && shoppingCard.count>0">{{shoppingCard.price}} р</span>
+        <ion-icon name="cart"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar class="toolbar-main">
+    <ion-segment [(ngModel)]="currentPage" color="secondary">
+      <ion-segment-button value="info">
+        <ion-icon name="ios-home-outline"></ion-icon>
+        <span>
+          Инфо
+        </span>
+      </ion-segment-button>
+      <ion-segment-button [class.hide]="!itemCompany || itemCompany.online_shop == 0 || !userAuth" value="shop">
+        <ion-icon name="ios-cart-outline"></ion-icon>
+        <span>
+          Товары
+        </span>
+      </ion-segment-button>
+      <ion-segment-button value="reviews">
+        <ion-icon name="ios-chatboxes-outline"></ion-icon>
+        <span>
+          Отзывы
+        </span>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!itemCompanyLoad" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div class="content-block" [class.hidden]="!itemCompanyLoad" style="width: 100%;">
+    <div [ngSwitch]="currentPage">
+      <div *ngSwitchCase="'info'">
+        <div *ngIf="itemCompanyStatus == 'error'" class="center ev-text">
+          <div class="ev-vertical">{{itemCompanyEvents[0].text}}</div>
+        </div>
+        <div *ngIf="itemCompanyStatus == 'ok'">
+          <div *ngIf="itemCompany == {}" class="center ev-text">
+            <div class="ev-vertical">{{itemCompanyEvents[0].text}}</div>
+          </div>
+        </div>
+        <div *ngIf="itemCompany">
+          <div class="bg-store">
+            <div class="store-overflow">
+              <div class="store-overlay" [ngStyle]="{'background-image': 'url('+ itemCompany.header_picture +')'}">
+              </div>
+            </div>
+
+            <div class="store-top"></div>
+            <div class="store-bg" [ngStyle]="{'background-image': 'url('+ itemCompany.header_picture +')'}">
+              <div class="store-star" *ngIf="itemCompany.rating">
+                <ion-icon name="star"></ion-icon>
+                <span>{{ itemCompany.rating }}</span>
+              </div>
+              <div class="stroe-title">
+                <img src="{{itemCompany.logo}}">
+                <span>{{ itemCompany.name }}</span>
+              </div>
+              <div class="store-sale">
+                <small></small>
+                <span>{{ itemCompany.discount_info }}</span>
+              </div>
+            </div>
+
+            <div class="store-nav store-nav-tabs">
+              <ion-content #MultiItemsScrollingTabs class="tabsContent">
+                <div class="tabsContainer">
+                  <ion-segment class="SwipedTabs-tabs" [(ngModel)]="currSlide">
+                    <ion-segment-button *ngFor='let tab of tabs ; let i = index ' id="tabTitle{{i}}" value="IngoreMe"
+                                        (click)="selectTab(i)"
+                                        [ngClass]='{ "SwipedTabs-activeTab" : (currSlide === i) }'>
+                      {{tab}}
+                    </ion-segment-button>
+                  </ion-segment>
+                  <!-- here is our dynamic line  "indicator"-->
+                  <div id='indicator' class="SwipedTabs-indicatorSegment"></div>
+                </div>
+
+              </ion-content>
+            </div>
+          </div>
+
+          <ion-slides #SwipedTabsSlider (ionSlideDidChange)="updateIndicatorPosition()"
+                      (panend)="updateIndicatorPositionOnTouchEnd()"
+                      [pager]="false">
+            <ion-slide [class.hidee]="currSlide !== 0 || currSlide">
+              <div class="store-contact">
+                <a *ngIf="itemCompany.phone != ''" href="tel:{{itemCompany.phone}}">
+                  <ion-icon name="call"></ion-icon>
+                  <span>Позвонить</span>
+                </a>
+                <span></span>
+                <a *ngIf="itemCompany.site != ''" (click)="openSiteLink()">
+                  <ion-icon name="globe"></ion-icon>
+                  <span>Сайт</span>
+                </a>
+              </div>
+              <div class="store-about">
+                <span>Описание</span>
+                <p [innerHTML]="itemCompany.description"></p>
+              </div>
+            </ion-slide>
+            <ion-slide [class.hidee]="currSlide !== 1">
+              <ion-grid>
+                <ion-row>
+                  <ion-col col-4 *ngFor="let photo of galleryPhotos; let i = index">
+                    <img src="{{photo.url}}" style="width: 100%;" (click)="openModalPhoto(i)">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+            <ion-slide [class.hidee]="currSlide !== 2" class="address">
+              <div class="address-title">
+                <ion-icon name="map"></ion-icon>
+                Список адресов
+              </div>
+              <div class="item-address" *ngFor="let branch of branchList; let i = index">
+                <ion-icon name="pin"></ion-icon>
+                <span>
+             {{branch.address}}
+             <span class="item-note">{{branch.rating}}
+               <ion-icon name="star" class="rating-icon-right"></ion-icon>
+             </span>
+            </span>
+              </div>
+            </ion-slide>
+
+          </ion-slides>
+        </div>
+      </div>
+      <div *ngSwitchCase="'shop'">
+        <div *ngIf="itemCompany && itemCompany.online_shop == 1">
+          <div *ngIf="shopCategoriesList">
+            <div *ngIf="shopCategoriesList.status == 'error'" class="center ev-text">
+              <div class="ev-vertical">{{shopCategoriesList.events[0].text}}</div>
+            </div>
+            <div *ngIf="shopCategoriesList.status == 'ok'">
+              <div *ngIf="shopCategoriesList.data.length == 0" class="center ev-text">
+                <div class="ev-vertical">{{shopCategoriesList.events[0].text}}</div>
+              </div>
+              <ion-list no-lines *ngIf="shopCategoriesList.data.length > 0">
+                <button ion-item *ngFor="let item of shopCategoriesList.data" (click)="selectShopCategory(item.id, item.name)">
+                  {{item.name}}
+                </button>
+              </ion-list>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'reviews'">
+        <div class="content-block reviews-content">
+          <div class="header-comm">
+            <span>Средний рейтинг: <span *ngIf="itemCompany && itemCompany.rating">{{ itemCompany.rating }}</span></span>
+          </div>
+          <div *ngIf="reviewsList">
+            <div *ngIf="reviewsList.status == 'error'" class="center ev-text">
+              <div class="ev-vertical">{{reviewsList.events[0].text}}</div>
+            </div>
+            <div *ngIf="reviewsList.status == 'ok'">
+              <div *ngIf="!reviewsList.data || reviewsList.data.length == 0" class="center ev-text">
+                <div class="ev-vertical">{{reviewsList.events[0].text}}</div>
+              </div>
+              <div *ngIf="reviewsList.data && reviewsList.data.length > 0">
+
+                <div class="comm" *ngFor="let item of reviewsList.data; let i = index">
+                  <img src="https://legendcity.ru/api/resize_crop.php?type=user&id={{item.user_id}}" class="comm-ava">
+                  <div class="comm-info">
+                    <div class="comm-star">
+                      <ion-icon name="star"></ion-icon>
+                      <span>{{item.rating}}</span>
+                    </div>
+                    <span>{{item.name}}</span>
+                    <small>{{item.date}}</small>
+                    <div class="comm-text">
+                      {{item.comment}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</ion-content>

@@ -1,0 +1,11 @@
+<ion-tabs>
+  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>
+  <span *ngIf="userInfo && userInfo.data && userInfo.data.parent != 0 && userInfo.data.business_type != 0">
+  <ion-tab [root]="tab2Root" tabIcon="analytics"></ion-tab>
+  </span>
+  <ion-tab [root]="tab3Root" tabIcon="contact"></ion-tab>
+  <span *ngIf="userInfo && userInfo.data">
+  <ion-tab [root]="tab4Root" tabIcon="card"></ion-tab>
+  <ion-tab [root]="tab5Root" tabIcon="notifications"></ion-tab>
+  </span>
+</ion-tabs>

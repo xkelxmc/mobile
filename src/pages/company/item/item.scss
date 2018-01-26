@@ -1,0 +1,420 @@
+page-company-item {
+  .toolbar-main{
+    ion-segment{
+      &.segment-ios {
+        ion-segment-button{
+          span{
+            top: -4px;
+          }
+        }
+      }
+      ion-segment-button{
+        span{
+          display: inline-block;
+          position: relative;
+          top: -5px;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+
+  .content-block {
+    transition: 0.2s opacity;
+  }
+  .hidden {
+    opacity: 0;
+  }
+
+  .tabsContent {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,000000+100&0+0,0.5+100 */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.7) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.7) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.7) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#80000000', GradientType=0); /* IE6-9 */
+    height: 50px !important;
+    .segment-ios {
+      .segment-button {
+        height: 4.2rem;
+        font-size: 1.2rem;
+        line-height: 4rem;
+        border-radius: 0;
+      }
+    }
+    .scroll-content {
+      //overflow-x: scroll !important;
+      overflow: hidden!important;
+      margin-bottom: 0 !important;
+    }
+    .tabsContainer {
+      position: relative;
+      margin: 0 auto;
+      width: fit-content !important;
+      .SwipedTabs-tabs {
+        width: fit-content !important;
+        ion-segment-button {
+          border: none !important;
+          color: white !important;
+          opacity: 0.7 !important;
+          background-color: transparent !important;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+          &.segment-button {
+            max-width: initial !important;
+            flex: auto !important;
+            width: initial !important;
+          }
+          &.SwipedTabs-activeTab {
+            opacity: 1 !important;
+            border-bottom: solid 2px #ffffff!important;
+          }
+        }
+
+      }
+    }
+
+  }
+
+
+
+  .bg-store {
+    position: relative;
+    .store-overflow {
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.3);
+      .store-overlay {
+        overflow: hidden;
+        position: absolute;
+        top: -10px;
+        bottom: -10px;
+        left: -10px;
+        right: -10px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur(20px);
+        &:after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          background: rgba(0, 0, 0, 0.30);
+        }
+      }
+    }
+
+    /**** store nav ****/
+    .store-top{
+      height: 20px;
+      z-index: 1;
+      width: 100%;
+      position: relative;
+    }
+    .store-nav {
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      &.store-nav-tabs {
+        padding-bottom: 0;
+        padding-top: 10px;
+      }
+      a {
+        display: inline-block;
+        padding: 2px 10px;
+        color: #fff;
+        font-weight: 400;
+        &:hover, &:focus {
+          color: #eee;
+        }
+        &.active {
+          border-radius: 3px;
+          background: rgba(10, 166, 255, 0.4);
+        }
+      }
+    }
+
+    .store-bg {
+      height: 200px;
+      border-radius: 5px;
+      position: relative;
+      bottom: 0;
+      margin: 0 10px 0;
+      box-shadow: 1px 5px 5px 1px rgba(0, 0, 0, 0.1);
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.50);
+        box-shadow: 0px -15px 45px 45px rgba(0, 0, 0, 0.50);
+      }
+      .store-star {
+        position: absolute;
+        right: 30px;
+        top: 0;
+        background: #F36056;
+        background: rgba(243, 96, 86, 0.9);
+        color: #fff;
+        text-align: center;
+        padding: 0;
+        width: 40px;
+        &:after {
+          content: '';
+          position: absolute;
+          left: 0px;
+          right: 0;
+          bottom: -35px;
+          border: 20px solid transparent;
+          border-top: 15px solid rgba(243, 96, 86, 0.9);
+        }
+        ion-icon {
+          position: relative;
+          padding-top: 3px;
+          top: 3px;
+        }
+        span {
+          position: relative;
+          display: block;
+          top: 3px;
+          z-index: 1;
+        }
+      }
+      .store-sale {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        bottom: 1px;
+        span {
+          background: rgba(169, 80, 228, 0.65);
+          padding: 5px 10px;
+          border-radius: 5px 0 5px 5px;
+          font-size: 13px;
+          color: #fff;
+        }
+        small {
+          position: absolute;
+          top: -22px;
+          color: #fff;
+          right: 0px;
+        }
+      }
+      .stroe-title {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        z-index: 1;
+        img {
+          display: inline-block;
+          height: 50px;
+          width: 50px;
+          float: left;
+        }
+        span {
+          float: left;
+          line-height: 50px;
+          height: 50px;
+          margin-left: 10px;
+          font-size: 20px;
+          font-weight: 500;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .store-contact {
+    margin: 20px 15px;
+    position: relative;
+    text-align: center;
+    span {
+      display: inline-block;
+      margin: 0 10px;
+    }
+    a {
+      margin-bottom: 0;
+      color: #569FF3 !important;
+      display: inline-block;
+      ion-icon {
+        vertical-align: baseline;
+        //margin-right: 10px;
+        font-size: 25px !important;
+      }
+    }
+  }
+  .store-about {
+    padding: 20px 20px 5px;
+    border-top: solid 1px #eee;
+    span {
+      font-weight: 500;
+      display: block;
+      color: #5AA6FF;
+      margin-bottom: 10px;
+    }
+    p {
+      display: block;
+      padding-left: 10px;
+      border-left: solid 1px #eee;
+    }
+  }
+  .slide-zoom {
+    text-align: left;
+  }
+  ion-slides{
+    touch-action: initial!important;
+    user-select: initial!important;
+    -webkit-user-drag: initial!important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  .swiper-slide {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  ion-slide {
+    min-height: 200px;
+    transition: 0.1s opacity, 0.1s background-color;
+    opacity: 1;
+    &.hidee{
+      opacity: 0;
+      min-height: 0;
+      height: 0!important;
+    }
+  }
+
+  .address {
+    .address-title {
+      margin: 20px;
+      font-size: 20px;
+      color: #5AA6FF;
+      ion-icon {
+        font-size: 30px;
+        position: relative;
+        top: 3px;
+        margin-right: 4px;
+      }
+    }
+    .item-address {
+      position: relative;
+      padding: 15px 25px;
+      border-top: solid 1px #eee;
+      > ion-icon {
+        color: #5AA6FF;
+        position: relative;
+        top: 2px;
+        margin-right: 10px;
+        float: left;
+      }
+      span, .action-location > span {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-right: 30px;
+      }
+      .item-note {
+        position: absolute;
+        right: 25px;
+        top: 16px;
+        padding-right: 0;
+        color: #aaa;
+        font-size: 14px;
+        ion-icon {
+          color:#FFC000;
+
+        }
+      }
+    }
+  }
+
+  .reviews-content{
+    .header-comm {
+      background: url(../assets/imgs/rating.jpg) center no-repeat;
+      background-size: cover;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0;top: 0;bottom: 0;
+        background: rgba(0,0,0,0.5);
+      }
+      > span {
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+    .comm {
+      padding: 20px;
+      position: relative;
+      border-top: solid 1px #eee;
+      padding-top: 30px;
+      .comm-ava {
+        display: block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+      }
+      .comm-info {
+        position: relative;
+        padding-left: 75px;
+        > span {
+          display: block;
+          font-weight: 600;
+        }
+        small {
+          display: block;
+          margin-bottom: 10px;
+        }
+        .comm-star {
+          position: absolute;
+          right: 0;
+          top: 7px;
+          background: #5BA7FF;
+          color: #fff;
+          padding: 1px 10px;
+          border-radius: 25px;
+          ion-icon {
+            color: #F5E501;
+            font-size: 14px;
+          }
+        }
+        .comm-text {
+          font-size: 12px;
+          line-height: 18px;
+          position: relative;
+        }
+      }
+    }
+  }
+}
+
+.ios {
+  page-company-item {
+    .SwipedTabs-indicatorSegment {
+      position: relative;
+      top: 36px !important;
+    }
+  }
+}

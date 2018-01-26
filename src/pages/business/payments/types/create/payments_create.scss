@@ -1,0 +1,91 @@
+page-business-payments-create {
+  .pro-content {
+    position: relative;
+    padding: 20px;
+    padding-top: 0;
+    .item-history {
+      display: block;
+      position: relative;
+      padding: 10px 0;
+      border-bottom: solid 1px #eee;
+      .img {
+        position: absolute;
+        height: 40px;
+        width: 40px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        top: 17px;
+      }
+
+      .info {
+        padding-left: 55px;
+      }
+
+      .date {
+        font-size: 12px;
+        color: #636363;
+      }
+      .name {
+        text-transform: uppercase;
+        color: #000;
+        font-size: 12px;
+        margin: 5px 0;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+
+      .minus {
+        color: #ca2e2e;
+      }
+      .plus {
+        color: #44A330;
+      }
+      .zerro {
+        color: #424242;
+      }
+      .result {
+        font-size: 20px;
+        font-weight: 300;
+      }
+
+    }
+  }
+  .list-ios > .item-block:first-child, .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block, .list-md .item-input:last-child, .list-ios > .item-block:last-child .item-inner, .list-ios > .item-wrapper:last-child .item-block .item-inner, .list-md .item-block .item-inner, .list-ios .item-block .item-inner {
+    border-bottom: none;
+    border-top: none;
+  }
+  .item-md.item-input.item-input-has-focus .item-inner, .item-md.item-input.input-has-focus .item-inner {
+    border-bottom: none;
+  }
+  .item-md.item-input.item-input-has-focus .item-inner .input-wrapper, .item-md.item-input.input-has-focus .item-inner .input-wrapper {
+    border-bottom: solid 1px #488aff;
+  }
+  .item-label-stacked .input-wrapper, .item-label-floating .input-wrapper {
+    border-bottom: solid 1px #e9e9e9;
+  }
+  .list-ios, .list-md {
+    margin-bottom: 0;
+  }
+  ion-item.item-block {
+    padding-right: 8px;
+  }
+  p {
+    font-size: 0.8em;
+    color: #d2d2d2;
+  }
+
+  ion-label, .select-text {
+    margin-left: 10px;
+  }
+
+  ion-input, ion-select, ion-textarea {
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+  }
+
+  .invalid {
+    border: 1px solid #ea6153;
+  }
+
+}

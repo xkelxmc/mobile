@@ -1,0 +1,144 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Профиль</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="userAuth">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!userAuth" padding class="slide-fl">
+    <div class="content">
+      <img src="assets/imgs/card.png" class="slide-image">
+      <h2 class="slide-title">Для полного доступа к личному кабинету необходимо авторизоваться</h2>
+      <button class="slide-button" ion-button large clear icon-end color="primary" (click)="login()">
+        Войти
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+      <!--<button ion-button full color="success" (click)="signup()">Зарегистрироваться</button>-->
+      <!--<button ion-button full color="lightText" (click)="backToWelcome()">стартовый</button>-->
+    </div>
+  </div>
+  <div *ngIf="userAuth">
+    <div class="pro-header">
+
+      <!--<div class="blur"><img src="https://legendcity.ru/api/resize_crop.php?type=usercrop&id={{userData.id}}"></div>-->
+      <div class="blur"><img src="assets/imgs/city-bg.png"></div>
+      <div class="profile-info">
+
+        <div class="avatar" [ngStyle]="{'background-image': 'url(https://legendcity.ru/api/resize_crop.php?type=usercrop&id='+ userData.id +')'}"></div>
+        <span>{{userData.name}} {{userData.surname}}</span>
+        <small><ion-icon name="card"></ion-icon> {{userData.cardFormat}}</small>
+        <div class="icons">
+          <a href="#" style="display: none;"><ion-icon name="settings"></ion-icon></a>
+          <a (click)="logout()"><ion-icon name="log-out"></ion-icon></a>
+        </div>
+      </div>
+    </div>
+    <div class="pro-menu clearfix">
+      <a (click)="subscriptions()" class="item">
+        <div>
+          <small *ngIf="userInfo && userInfo.data && userInfo.data.count_sub>0">{{userInfo.data.count_sub}}</small>
+          <ion-icon name="ios-heart"></ion-icon>
+        </div>
+        <span>Подписки</span>
+      </a>
+      <a (click)="certificates()" class="item">
+        <div><ion-icon name="list-box"></ion-icon></div>
+        <span>Сертификаты</span>
+      </a>
+      <a (click)="promocodes()" class="item">
+        <div> <ion-icon name="key"></ion-icon></div>
+        <span>Промокоды</span>
+      </a>
+    </div>
+    <div class="pro-bonus clearfix">
+      <div class="pro-title">Бонусы</div>
+      <div *ngIf="!userBonus" class="center ev-text">
+        <div class="ev-vertical">
+          <ion-spinner></ion-spinner>
+        </div>
+      </div>
+      <div *ngIf="userBonus">
+        <div *ngIf="userBonus.status == 'error'" class="center ev-text">
+          <div class="ev-vertical">{{userBonus.events[0].text}}</div>
+        </div>
+        <div *ngIf="userBonus.status == 'ok'">
+          <div *ngIf="!userBonus.data || userBonus.data.length == 0" class="center ev-text">
+            <div class="ev-vertical">{{userBonus.events[0].text}}</div>
+          </div>
+          <ion-slides *ngIf="userBonus.data && userBonus.data.length > 0" [slidesPerView]="3.2" #mySlider>
+            <ion-slide *ngFor="let bonusInfo of userBonus.data">
+              <div class="bonus">
+                <div>
+                  <div class="img" [ngStyle]="{'background-image': 'url('+ bonusInfo.org_logo +')'}"></div>
+                  <span>{{bonusInfo.org_name}}</span>
+                  <small>
+                    <ion-icon name="medal"></ion-icon>
+                    {{bonusInfo.bonus}}
+                  </small>
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </div>
+
+    <div class="pro-content">
+      <div class="pro-title fix-title">История покупок</div>
+      <div *ngIf="userBuys">
+        <div *ngIf="userBuys.status == 'error'" class="center ev-text">
+          <div class="ev-vertical">{{userBuys.events[0].text}}</div>
+        </div>
+        <div *ngIf="userBuys.status == 'ok'">
+          <div *ngIf="!userBuys.data || userBuys.data.length == 0" class="center ev-text">
+            <div class="ev-vertical">{{userBuys.events[0].text}}</div>
+          </div>
+          <div *ngIf="userBuys.data && userBuys.data.length > 0">
+            <a class="item-history" *ngFor="let buy of userBuys.data" (click)="openBuyInfo(buy.id)">
+              <div class="img"  [ngStyle]="{'background-image': 'url('+ buy.logo +')'}">
+                <span *ngIf="buy.rating" style="background: #44A330;"><ion-icon name="checkmark"></ion-icon></span>
+                <span *ngIf="!buy.rating && buy.can_review == 1" style="background: #3F88F9; font-size: 9px; padding-right: 1px;"><ion-icon name="ios-paper-plane"></ion-icon></span>
+                <span *ngIf="!buy.rating && buy.can_review == 0"  style="color: #ccc;"></span>
+              </div>
+              <div class="info">
+                <div class="date">{{buy.date}}</div>
+                <div class="name">{{buy.org_name}}</div>
+                <div class="result">{{buy.format_price}} Руб.</div>
+                <div class="sale" *ngIf="buy.bonus_up == 0 && buy.bonus_down == 0 && buy.discount_price != buy.price">
+                  <div class="number">
+                    <div>
+                      <div class="bonus_summ_abs">{{buy.discount}}%</div>
+                    </div>
+                    <span>Экономия</span>
+                  </div>
+                </div>
+                <div class="sale" *ngIf="buy.bonus_up > 0 || buy.bonus_down > 0">
+                  <div class="small-bonus-block">
+                    <div class="small-bonus plus" *ngIf="buy.bonus_up > 0">+{{buy.bonus_up}}</div>
+                    <div class="small-bonus minus" *ngIf="buy.bonus_down > 0">-{{buy.bonus_down}}</div>
+                  </div>
+                  <div class="number {{buy.bonus_summ > 0 ? 'plus' : 'minus'}}">
+                    <div>
+                      <small>{{buy.bonus_summ > 0 ? '+' : '-'}}</small>
+                      <div class="bonus_summ_abs">{{buy.bonus_summ_abs}}</div>
+                    </div>
+                    <span>Бонусов</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="btn-all" (click)="getAllBuys()" *ngIf="showAllBuysBtn && countBuys>= limitBuys">Показать всю историю</div>
+      <ion-infinite-scroll #infscroll (ionInfinite)="doInfinite($event)" *ngIf="showAllBuys">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </div>
+</ion-content>

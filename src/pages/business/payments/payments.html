@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Мои счета</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="!paymentsList" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+
+  <button ion-button block (click)="add_payments()">Создать счет</button>
+  <div *ngIf="paymentsList" class="inner-bg">
+    <div *ngIf="paymentsList.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{paymentsList.events[0].text}}</div>
+    </div>
+    <div *ngIf="paymentsList.status == 'ok'">
+      <div *ngIf="!paymentsList.data || paymentsList.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{paymentsList.events[0].text}}</div>
+      </div>
+      <div *ngIf="paymentsList.data && paymentsList.data.length > 0">
+
+        <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="paymentsList">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <div class="pro-content">
+
+          <a class="item-history" *ngFor="let item of paymentsList.data">
+            <div class="img" [ngStyle]="{'background-image': 'url('+ item.logo +')'}">
+              <div [ngSwitch]="item.active">
+                <div *ngSwitchCase="0"><span style="background: #ccc;"></span></div>
+                <div *ngSwitchCase="1"><span style="background: #2e7d32;"></span></div>
+              </div>
+            </div>
+            <div class="info">
+              <div class="date">{{item.type_name}}</div>
+              <div class="date">{{item.name}} {{item.surname}}</div>
+              <div class="name">{{item.number}}</div>
+              <div class="result">
+                <small>Комиссия:</small> {{item.type_commission}}%
+              </div>
+              <div class="result">
+                <small>Мин. сумма:</small> {{item.type_start_price}} Руб.
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

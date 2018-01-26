@@ -1,0 +1,134 @@
+page-certificates{
+  .scroll-content {
+    background: #EDEEF0;
+    padding: 15px;
+  }
+  .sert {
+    border-bottom: solid 1px #eee;
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    .img{
+      position: relative;
+      overflow: hidden;
+      padding: 15px 20px;
+      display: block;
+      .blur {
+        position: absolute;
+        left: -20px;
+        right: -20px;
+        top: -25px;
+        bottom: -20px;
+        filter: blur(5px);
+        &:after{
+          content: '';
+          position: absolute;
+          left: 0;right:0; top:0;bottom: 0;
+          background: rgba(0,0,0,0.2);
+        }
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .ava {
+        height: 50px;
+        width: 50px;
+        background-size: cover;
+        position: relative;
+        border-radius: 50%;
+        left:-10px;
+        float: left;
+      }
+      .title {
+        position: absolute;
+        top: 50%;
+        color: #fff;
+        left: 70px;
+        margin-top: 0;
+        font-weight: 300;
+        font-size: 24px;
+        transform: translate(0, -50%);
+      }
+    }
+    .post {
+      padding: 12px 10px 20px 10px;
+      padding-top: 12px;
+      margin: 0;
+      display: block;
+      position: relative;
+      h2 {
+        margin-top: 0;
+        margin-bottom: 7px;
+        color: #444444;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        position: relative;
+      }
+
+      span {
+        position: relative;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: 300;
+        color: #F2A703;
+        border-radius: 2px;
+      }
+
+
+      .text {
+        font-weight: 400;
+        font-size: 13px;
+        color: #54585C;
+        line-height: 15px;
+        margin-bottom: 7px;
+        height: 45px;
+        max-height: 45px;
+        overflow: hidden;
+        position: relative;
+        margin-top: 5px;
+        &:after {
+          content: "";
+          text-align: right;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 50%;
+          height: 1.2em;
+          background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 80%);
+        }
+      }
+
+      .foot {
+        margin-bottom: 5px;
+        div {
+          display: inline-block;
+          font-size: 11px;
+          color: #fff;
+          padding: 2px 5px;
+          height: 17px;
+          line-height: 15px;
+          border-radius: 2px;
+          text-transform: uppercase;
+          font-weight: 500;
+          letter-spacing: 0.2px;
+          position: relative;
+          top: 8px;
+          &.float-left{
+            float: left;
+          }
+          &.float-right{
+            float: right;
+          }
+          &.green{
+            background: #56A919;
+          }
+        }
+      }
+
+    }
+  }
+}

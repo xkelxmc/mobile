@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar class="ios-header">
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Персонал</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <div *ngIf="!staffList" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="staffList">
+      <div *ngIf="staffList.data && staffList.data.length > 0">
+        <a class="item-sub" *ngFor="let usr of staffList.data; let i = index" (click)="staffItem(usr.id, usr)">
+          <div class="img" [ngStyle]="{'background-image': 'url('+ usr.photo +')'}">
+            <div class="star" *ngIf="usr.rating" [ngStyle]="{'background-color': usr.color}">
+              <small>{{usr.rating}}</small>
+            </div>
+            <div class="star" *ngIf="!usr.rating && buyInfo.can_review == 1" style="background: #3F88F9;">
+              <small><ion-icon name="ios-paper-plane" style="font-size: 14px;position: relative;top: 1px;"></ion-icon></small>
+            </div>
+            <div class="star" *ngIf="!usr.rating && buyInfo.can_review == 0" style="background: #ccc;"></div>
+          </div>
+          <div class="info">
+            <div>{{usr.name}} {{usr.surname}}</div>
+            <span>{{usr.job}}</span>
+          </div>
+          <div class="right-block">
+            <button class="blue" *ngIf="!usr.rating && buyInfo.can_review == 1">
+              Оценить
+            </button>
+          </div>
+        </a>
+      </div>
+  </div>
+</ion-content>

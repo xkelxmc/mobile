@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Подробнее</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!certificatesItem" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="certificatesItem" class="inner-bg">
+    <div *ngIf="certificatesItem.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{certificatesItem.events[0].text}}</div>
+    </div>
+    <div *ngIf="certificatesItem.status == 'ok'">
+      <div *ngIf="!certificatesItem.data" class="center ev-text">
+        <div class="ev-vertical">{{certificatesItem.events[0].text}}</div>
+      </div>
+      <div *ngIf="certificatesItem.data">
+        <div class="head" [ngStyle]="{'background-image': 'url('+ certificatesItem.data.header_picture +')'}">
+          <div>
+            <div (click)="openCompany(certificatesItem.data.org_id)" class="ava" [ngStyle]="{'background-image': 'url('+ certificatesItem.data.logo +')'}"></div>
+            <div class="title">{{certificatesItem.data.org_name}} <span>Дейсвует c {{certificatesItem.data.date}}.</span><span>Дейсвует до {{certificatesItem.data.date_end}}.</span></div>
+          </div>
+        </div>
+        <div class="sert-content">
+          <div class="title">
+            <span>{{certificatesItem.data.name}}</span>
+          </div>
+          <div class="text">
+            {{certificatesItem.data.description}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

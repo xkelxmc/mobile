@@ -1,0 +1,39 @@
+page-welcome {
+  ion-header{
+    &:after{
+      content: none!important;
+    }
+    &.header-ios .toolbar-background-ios{
+      border: none;
+    }
+  }
+  .slide-image {
+    max-width: 250px;
+    background: none !important;
+    padding: 0 20px !important;
+    position: relative;
+    top: -50px;
+  }
+  .slide-title {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 0 auto;
+    font-size: 20px;
+  }
+
+  .slide-button {
+    position: relative;
+    top: 50px;
+    text-transform: inherit !important;
+    font-weight: 300;
+    font-size: 25px;
+  }
+  .toolbar-background {
+    background: #fff;
+    border-color: transparent;
+  }
+
+  .slide-zoom {
+    height: 100%;
+  }
+}

@@ -1,0 +1,928 @@
+
+/*VARIABLES
+====================================================*/
+
+/*Range*/
+$minRatingValue: 1;
+$maxNumOfStars: 6;
+$numFractions: 3;
+$fractionSize: $maxNumOfStars/$numFractions;
+
+/*Spacing*/
+$rating-margin-bottom: 5px;
+$default-stars-label-margin: 5px;
+
+/*Colors*/
+$color-negative-rating: #f03c56 !default;
+$color-ok-rating: #ffc058 !default;
+$color-positive-rating: #7ed321 !default;
+$color-default-rating: #999 !default;
+
+/*Sizes*/
+
+//default
+$default-star-width: 20px !default;
+$default-star-height: 20px !default;
+
+$default-star-font-size: 25px !default;
+$default-star-line-height: 25px !default;
+
+$default-label-font-size: 16px !default;
+$default-label-line-height: 16px !default;
+
+//small
+$small-label-font-size: 9.5px !default;
+$small-label-line-height: 9.5px !default;
+
+$small-star-width: 10px !default;
+$small-star-height: 9, 5px !default;
+
+$small-star-font-size: 11px !default;
+$small-star-line-height: 10px !default;
+
+//medium
+$medium-star-width: $default-star-width;
+$medium-star-height: $default-star-height;
+
+$medium-label-font-size: $default-star-width;
+$medium-label-line-height: $default-star-line-height;
+
+$medium-star-font-size: $default-label-font-size;
+$medium-star-line-height: $default-label-line-height;
+
+//large
+$large-star-width: 35px !default;
+$large-star-height: 33.3px !default;
+
+$large-star-font-size: 36px !default;
+$large-star-line-height: 35px !default;
+
+$large-label-font-size: 14px !default;
+$large-label-line-height: 16px !default;
+
+/*Animation*/
+$default-animation-speed: 0.3s;
+$slow-animation-speed: 0.8s;
+$immediately-animation-type: none;
+$default-animation-type: ease;
+
+/*Icons*/
+$default-star-character-empty: "\2606";
+$default-star-character-half: "\2605";
+$default-star-character-filled: "\2605";
+
+/*Disabled*/
+$disabled-opacity: 0.5;
+
+
+/*CSS Star Rating Elements
+=================================================================*/
+
+/*HELPER*/
+
+.center-all{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*
+Star element
+==================================================================*/
+.star {
+  position: relative;
+  width: $default-star-width;
+  height: $default-star-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg, i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    font-style: normal;
+
+    &.star-half,
+    &.star-filled {
+      opacity: 0;
+    }
+  }
+
+  i {
+    top:1px;
+    display: none;
+  }
+
+  &.icon i {
+    font-size: $default-star-font-size;
+    line-height: $default-star-line-height;
+
+    &.star-empty:before {
+      content: $default-star-character-empty;
+    }
+    &.star-half:before {
+      content: $default-star-character-half;
+    }
+    &.star-filled:before {
+      content: $default-star-character-filled;
+    }
+  }
+
+  &.custom-icon i {
+    font-size: 18px;
+    line-height: 18px;
+  }
+
+
+  /*
+  Fill states
+  ==================================================================*/
+  &.empty {
+    svg, i {
+      &.star-half,
+      &.star-filled {
+        opacity: 0;
+      }
+      &.star-empty {
+        opacity: 1;
+      }
+    }
+  }
+  &.half {
+    svg, i {
+      &.star-filled,
+      &.star-empty {
+        opacity: 0;
+      }
+      &.star-half {
+        opacity: 1;
+      }
+    }
+  }
+  &.filled {
+    svg, i {
+      &.star-empty,
+      &.star-filled {
+        opacity: 0;
+      }
+      &.star-filled {
+        opacity: 1;
+      }
+    }
+  }
+
+  /*
+  Colors
+  ==================================================================*/
+  &.default {
+    svg {
+      fill: $color-default-rating;
+    }
+    i {
+      color: $color-default-rating;
+    }
+  }
+  &.negative {
+    svg {
+      fill: $color-negative-rating;
+    }
+    i {
+      color: $color-negative-rating;
+    }
+  }
+  &.ok {
+    svg {
+      fill: $color-ok-rating;
+    }
+    i {
+      color: $color-ok-rating;
+    }
+  }
+  &.positive {
+    svg {
+      fill: $color-positive-rating;
+    }
+    i {
+      color: $color-positive-rating;
+    }
+  }
+
+  /*
+  Icon Types
+  ==================================================================*/
+  &.svg {
+    i {
+      display: none;
+    }
+    svg {
+      display: flex;
+    }
+  }
+
+  &.custom-icon,
+  &.icon {
+    svg {
+      display: none;
+    }
+    i {
+      display: flex;
+    }
+  }
+
+  /*
+  Star Size
+  ===================================================================*/
+  &.small {
+    width: $small-star-width;
+    height: $small-star-height;
+    i {
+      font-size: $small-star-font-size;
+      line-height: $small-star-line-height;
+    }
+  }
+
+  &.medium {
+    width: $default-star-width;
+    height: $default-star-width;
+    i {
+      font-size: $default-star-font-size;
+      line-height: $default-star-line-height;
+    }
+  }
+
+  &.large {
+    width: $large-star-width;
+    height: $large-star-height;
+    i {
+      font-size: $large-star-font-size;
+      line-height: $large-star-line-height;
+    }
+  }
+
+  /*
+Disabled
+=================================================*/
+  &.disabled {
+    opacity: $disabled-opacity;
+  }
+
+  /*
+  Direction
+  =================================================*/
+  &.direction-rtl {
+    svg, i {
+      &.star-half {
+        transform: scale(-1, 1);
+      }
+    }
+  }
+  &.direction-ltr {
+    svg, i {
+      &.star-half {
+        transform: scale(1, 1);
+      }
+    }
+  }
+
+}
+
+/*
+Label Element
+===================================================================*/
+
+.label-value {
+  font-size: $default-label-font-size;
+  line-height: $default-label-line-height;
+
+  /*
+  Sizes
+  =================================================================*/
+  &.small {
+    font-size: $small-label-font-size;
+    line-height: $small-label-line-height;
+  }
+
+  &.medium {
+    font-size: $default-label-font-size;
+    line-height: $default-star-line-height;
+  }
+
+  &.large {
+    font-size: $large-label-font-size;
+    line-height: $large-label-line-height;
+  }
+
+  /*
+  Disabled
+  =================================================*/
+  &.disabled {
+    opacity: $disabled-opacity;
+  }
+
+}
+
+/*
+Star Container
+==================================================================*/
+.star-container {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  justify-content: center;
+
+  margin-left: $default-stars-label-margin;
+  margin-right: $default-stars-label-margin;
+
+  transition: all $default-animation-speed $default-animation-type;
+
+  + .star {
+    margin-left: $default-stars-label-margin;
+  }
+
+  .star {
+    @extend .default;
+    transition: all $default-animation-speed $default-animation-type;
+    svg, i {
+      transition: all $default-animation-speed $default-animation-type;
+    }
+  }
+
+  svg {
+    z-index: 2;
+  }
+  i {
+    z-index: 1;
+  }
+
+  /*
+ Direction
+ ===================================================*/
+  &.direction-rtl {
+    direction: rtl;
+    .star {
+      @extend .star.direction-rtl;
+    }
+  }
+  &.direction-ltr {
+    direction: ltr;
+    .star {
+      @extend .star.direction-ltr;
+    }
+  }
+
+  /*
+  Space
+  ======================================================*/
+  &.space-no {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  &.space-between {
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+
+  &.space-around {
+    flex: 1 1 auto;
+    justify-content: space-around;
+  }
+
+}
+
+/*
+Rating Component
+========================================================================= */
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $rating-margin-bottom;
+
+  /*Rating Value
+  ====================================================*/
+  @for $i from $minRatingValue through $maxNumOfStars {
+    &.value-#{$i} {
+
+      .star-container {
+        .star:nth-child(-n+#{$i}) {
+          @extend .filled;
+        }
+
+        .star {
+          @if $i <= 2 {
+            @extend .star.negative;
+          }
+
+          @if $i == 3 {
+            @extend .ok;
+          }
+
+          @if $i >= 4 {
+            @extend .positive;
+          }
+        }
+      }
+    }
+  }
+
+  //Handling values > $maxNumOfStars up to $maxNumOfStars*2 (i know it's ugly. Maybe i will skip this completely)
+  @for $i from $maxNumOfStars through $maxNumOfStars*2 {
+    &.value-#{$i} {
+
+      .star-container {
+        .star:nth-child(-n+#{$i}) {
+          @extend .star.filled
+        }
+
+        .star {
+          @extend .positive;
+        }
+      }
+    }
+  }
+
+  /*Hover states
+  ====================================================*/
+
+  //- all stars before and the hover star should be filled
+  //- filled stars after the hover star should be empty
+
+  &.hover:hover {
+
+    @for $i from $minRatingValue through $maxNumOfStars {
+
+      &.value-#{$i}.half,
+      &.hover-#{$i} {
+        .star-container {
+          .star {
+            @extend .empty;
+          }
+        }
+      }
+
+      &.hover-#{$i} {
+        .star-container {
+
+          .star:nth-child(-n+#{$i}) {
+            @extend .filled;
+          }
+
+          .star {
+            @if $i <= 2 {
+              @extend .star.negative;
+            }
+
+            @if $i == 3 {
+              @extend .ok;
+            }
+
+            @if $i >= 4 {
+              @extend .positive;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  /*Half stars
+  ====================================================*/
+
+  //if we hals ratings > 0 && < 1 we color the first star
+  &.value-0.half {
+    .star {
+      @extend .negative;
+    }
+    .star:nth-child(1) {
+      @extend .half;
+    }
+  }
+
+  @for $i from $minRatingValue through $maxNumOfStars {
+    &.value-#{$i}.half {
+
+      .star-container {
+        @if ($i < $maxNumOfStars) {
+          .star:nth-child(#{$i+1}) {
+            @extend .half;
+          }
+        }
+      }
+
+    }
+  }
+
+  /*Label Visible
+  ====================================================*/
+  &.label-hidden {
+    .label-value {
+      display: none;
+    }
+  }
+  &.label-visible {
+    display: flex;
+  }
+
+  /*Label Position
+  ====================================================*/
+  &.label-top {
+    flex-direction: column;
+
+    .label-value {
+      + .star-container {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: $default-stars-label-margin;
+      }
+    }
+  }
+
+  &.label-left .label-value {
+    flex: 0 0 auto;
+
+    + .star-container {
+      margin-left: $default-stars-label-margin;
+      margin-right: 0;
+    }
+  }
+
+  &.label-right {
+    flex-direction: row-reverse;
+
+    .label-value {
+      + .star-container {
+        margin-left: 0;
+        margin-right: $default-stars-label-margin;
+      }
+    }
+  }
+
+  &.label-bottom {
+    flex-direction: column-reverse;
+
+    .label-value {
+      + .star-container {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: $default-stars-label-margin;
+      }
+    }
+  }
+
+  /*
+  Direction
+  ===================================================*/
+  &.direction-rtl {
+    direction: rtl;
+
+    .star-container {
+      @extend .star-container.direction-rtl;
+      .star {
+        @extend .star.direction-rtl;
+      }
+    }
+  }
+  &.direction-ltr {
+    direction: ltr;
+  }
+
+  /* Star Type
+  ====================================================*/
+  &.star-icon {
+    @extend .star.icon;
+  }
+  &.star-custom-icon {
+    @extend .star.custom-icon;
+  }
+  &.star-svg {
+    @extend .star.svg;
+  }
+
+  /* Sizes
+  ==========================================================*/
+  &.small {
+    .star {
+      @extend .star.small;
+    }
+
+    .label-value {
+      @extend .label-value.small;
+    }
+  }
+
+  &.medium {
+    .star {
+      @extend .star.medium;
+    }
+
+    .label-value {
+      @extend .label-value.medium;
+    }
+  }
+
+  &.large {
+    .star {
+      @extend .star.large;
+    }
+
+    .label-value {
+      @extend .label-value.large;
+    }
+  }
+
+  /* Space
+  ====================================================*/
+  &.space-no {
+    .star-container {
+      @extend .star-container.space-no;
+    }
+  }
+
+  &.space-between {
+    .star-container {
+      @extend .star-container.space-between;
+    }
+  }
+
+  &.space-around {
+    .star-container {
+      @extend .star-container.space-around;
+    }
+  }
+
+  /* Static Color
+    ====================================================*/
+  &.color-default {
+    .star-container {
+      .star {
+        svg {
+          fill: $color-default-rating;
+        }
+        i {
+          color: $color-default-rating;
+        }
+      }
+    }
+  }
+
+  &.color-ok {
+    .star-container {
+      .star {
+        svg {
+          fill: $color-ok-rating;
+        }
+        i {
+          color: $color-ok-rating;
+        }
+      }
+    }
+  }
+
+  &.color-positive {
+    .star-container {
+      .star {
+        svg {
+          fill: $color-positive-rating;
+        }
+        i {
+          color: $color-positive-rating;
+        }
+      }
+    }
+  }
+
+  &.color-negative {
+    .star-container {
+      .star {
+        svg {
+          fill: $color-negative-rating;
+        }
+        i {
+          color: $color-negative-rating;
+        }
+      }
+    }
+  }
+
+  /*Disabled
+  ====================================================*/
+  &.disabled {
+    .label-value {
+      @extend .label-value.disabled;
+    }
+    .star-container {
+      .star {
+        @extend .star.disabled;
+      }
+    }
+  }
+
+  /*AnimationSpeed
+ ====================================================*/
+  &.immediately
+  .star-container {
+    transition: all $immediately-animation-type;
+    .star {
+      transition: $immediately-animation-type;
+      svg, i {
+        transition: $immediately-animation-type;
+      }
+    }
+  }
+
+  &.noticeable {
+    .star-container {
+      transition: all $default-animation-speed $default-animation-type;
+      .star {
+        transition: all $default-animation-speed $default-animation-type;
+        svg, i {
+          transition: all $default-animation-speed $default-animation-type;
+        }
+      }
+    }
+  }
+
+  &.slow {
+    .star-container {
+      transition: all $slow-animation-speed $default-animation-type;
+      .star {
+        transition: all $slow-animation-speed $default-animation-type;
+        svg, i {
+          transition: all $slow-animation-speed $default-animation-type;
+        }
+      }
+    }
+  }
+
+}
+/*theme modifiers
+====================================================*/
+
+.rating {
+
+  &.theme-kununu {
+    $kununu-color-white: #fff !default;
+    $kununu-color-lightgray: #f8f8f8 !default;
+    $kununu-color-gray: #e9ecec !default;
+    $kununu-color-blue: #2286dc !default;
+    $kununu-color-darkblue: #2f3940 !default;
+    $kununu-color-green: #99c613 !default;
+
+    flex-direction: column;
+    width: 78px;
+
+    .label-value,
+    .star-container {
+      width: 100%;
+    }
+
+    .label-value {
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 6px 6px 0 0;
+      height: 50px;
+      border: 1px solid $kununu-color-gray;
+      border-bottom: 0px;
+      font-size: 18px;
+      font-weight: bold;
+      color: $kununu-color-darkblue;
+      letter-spacing: -1px;
+
+      background-color: $kununu-color-lightgray;
+    }
+    .star-container {
+      border-radius: 0 0 6px 6px;
+      padding: 2px 0 4px 0;
+      margin-left: 0px;
+      margin-right: 0px;
+
+      justify-content: center;
+      background-color: $kununu-color-green;
+
+      border: 1px solid $kununu-color-green;
+      border-bottom: 0px;
+
+      .star {
+        height: 11px;
+        width: 11px;
+        @extend .star.custom-icon;
+
+        i {
+          font-size: 11px;
+          color: $kununu-color-white;
+          text-align: center;
+        }
+      }
+    }
+
+  }
+
+  &.theme-google-places {
+    $google_places-color-default: #e1e1e1 !default;
+    $google_places-color-red: #e7711b !default;
+
+    .label-value {
+      color: $google_places-color-red;
+      font-family: arial, sans-serif;
+      font-size: 13px;
+      line-height: 15px;
+    }
+
+    .star-container {
+      width: 65px;
+      margin-left: 2px;
+
+      .star {
+
+        i {
+          font-size: 17px;
+          color: $google_places-color-red !important;
+          &.star-empty {
+            opacity: 1 !important;
+            color: $google_places-color-default !important;
+            &:before {
+              content: $default-star-character-filled;
+            }
+          }
+          &.star-half {
+            width: 7px;
+            overflow: hidden;
+            &:before {
+              content: $default-star-character-half;
+            }
+          }
+          &.star-filled:before {
+            content: $default-star-character-filled;
+          }
+        }
+      }
+
+    }
+
+  }
+
+  &.theme-classic {
+
+  }
+
+  &.theme-material {
+
+  }
+
+  &.theme-rolling-stars {
+
+    .star-container {
+      .star {
+        transition: transform 1s;
+        transform: rotate(0deg);
+      }
+    }
+
+    @for $i from $minRatingValue through $maxNumOfStars {
+      &.value-#{$i} {
+        .star-container {
+          .star:nth-child(-n+#{$i}) {
+            transition: transform 1s;
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
+
+    &.value-0.half {
+      .star:nth-child(1) {
+        transition: transform 1s;
+        transform: rotate(360deg);
+      }
+    }
+
+    @for $i from $minRatingValue through $maxNumOfStars {
+      &.value-#{$i}.half {
+        .star-container {
+          @if ($i < $maxNumOfStars) {
+            .star:nth-child(#{$i+1}) {
+              transition: transform 1s;
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+}

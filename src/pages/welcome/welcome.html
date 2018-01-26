@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons end>
+      <button ion-button (click)="continueApp()">
+        <span ion-text color="primary" showWhen="ios">Пропустить</span>
+        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of slides">
+      <div class="slide-fl">
+        <div class="content">
+          <img [src]="slide.image" class="slide-image"/>
+          <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="slide-fl">
+        <div class="content">
+          <img src="assets/img/slide/5.png" class="slide-image"/>
+          <h2 class="slide-title">
+            И все это по одной <br>карте –
+            «Легенда»!
+          </h2>
+          <button class="slide-button" ion-button large clear icon-end color="primary" (click)="continueApp()">
+            Начните экономить
+            <ion-icon name="ios-arrow-round-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

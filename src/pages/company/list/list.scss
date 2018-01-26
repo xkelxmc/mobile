@@ -1,0 +1,142 @@
+page-company-list {
+  .company {
+    padding: 10px 20px;
+    position: relative;
+    display: block;
+    height: 100px;
+    border-bottom: solid 1px #eee;
+    .img {
+      position: absolute;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background-size: cover;
+
+      .star {
+        position: absolute;
+        bottom: -19px;
+        right: -10px;
+        width: 35px;
+        height: 35px;
+        border-radius: 25px;;
+        border: solid 4px #fff;
+        text-align: center;
+        background: #F2A703;
+        small {
+          color: #fff;
+          font-size: 11px;
+          font-weight: 600;
+          line-height: 28px;
+        }
+        span {
+          position: absolute;
+          right: -70px;
+          top: 7px;
+          font-size: 11px;
+
+        }
+      }
+    }
+    .info {
+      padding-left: 80px;
+      padding-right: 40px;
+      position: relative;
+      div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: calc(100% + 40px);
+        color: #000;
+        font-weight: 500;
+        font-size: 16px;
+        position: relative
+      }
+      small {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+        display: inline-block;
+        color: #96A1BA;
+        font-size: 10px;
+        font-weight: 400;
+        background: #eee;
+        padding: 2px 5px;
+        border-radius: 5px;
+        position: relative;
+        top: 2px;
+      }
+      span {
+        font-size: 11px;
+        color: #444;
+        margin-top: 3px;
+        display: block;
+        height: 27px;
+        line-height: 13px;
+        overflow: hidden;
+      }
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      right: 0;
+      margin-top: 0;
+      position: absolute;
+      left: 170px;
+      margin-bottom: 0;
+      line-height: 12px;
+      bottom: 7px;
+      li {
+        display: inline-block;
+        font-size: 11px;
+        color: #444444;
+      }
+    }
+    button {
+      position: absolute;
+      right: 20px;
+      top: 35px;
+      height: 35px;
+      width: 35px;
+      line-height: 37px;
+      text-align: center;
+      border-radius: 50%;
+      color: #ccc;
+      background: #fff;
+      border: solid 1px #ccc;
+    }
+    .active {
+      background: #f93f3f;
+      color: #fff;
+      border: solid 1px #f93f3f;
+    }
+  }
+
+  .company-rating {
+    position: absolute;
+    left: 100px;
+    bottom: 9px;
+  }
+
+  .rating-text {
+    font-size: 11px;
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 0px;
+    color: #000 !important;
+  }
+  span.stars, span.stars span {
+    display: block;
+    background-image: url(../assets/imgs/star@2.png);
+    background-repeat: repeat-x;
+    background-position: 0 -12px;
+    background-size: 12px 24px;
+    width: 60px;
+    height: 12px;
+  }
+
+  span.stars span {
+    background-position: 0 0;
+  }
+}

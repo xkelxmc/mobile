@@ -1,0 +1,66 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{header}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only class="bar-cart" (click)="openShoppingCart()">
+        <span class="count" *ngIf="shoppingCard && shoppingCard.count>0">{{shoppingCard.price}} р</span>
+        <ion-icon name="cart"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Потяните для обновления"
+      refreshingText="Обновление...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!shopItems" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="shopItems">
+    <div *ngIf="shopItems.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{shopItems.events[0].text}}</div>
+    </div>
+    <div *ngIf="shopItems.status == 'ok'">
+      <div *ngIf="shopItems.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{shopItems.events[0].text}}</div>
+      </div>
+
+      <div *ngIf="shopItems.data && shopItems.data.length > 0">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6 class="ip-company" *ngFor="let item of shopItems.data; let i = index">
+              <div class="ip-img">
+                <div [ngStyle]="{'background-image': 'url(' + item.url + ')'}" class="ip-fon"></div>
+              </div>
+              <div class="ip-title">
+                {{item.name}}
+              </div>
+              <div class="ip-discription" *ngIf="item.discription">
+                {{item.discription}}
+              </div>
+              <div class="ip-price">
+                <span>{{item.price}} Руб.</span>
+              </div>
+              <div class="ip-buttons" *ngIf="!shoppingCard || shoppingCard.items[item.id] == undefined">
+                <button ion-button block small (click)="addToCart(item.id, item.price)">Заказать</button>
+              </div>
+              <div class="ip-buttons" *ngIf="shoppingCard && shoppingCard.items[item.id]">
+                <button ion-button small class="minus" (click)="removeFromCart(item.id)">-</button>
+                <span class="number">{{shoppingCard.items[item.id].count}}</span>
+                <button ion-button small class="plus" (click)="addToCart(item.id, item.price)">+</button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

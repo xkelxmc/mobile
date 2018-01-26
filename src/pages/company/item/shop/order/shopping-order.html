@@ -1,0 +1,51 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{header}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+
+
+    <form [formGroup]="checkForm">
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked>Адресс</ion-label>
+        <ion-input type="text" placeholder="ул. Ленина"
+                   [class.invalid]="!checkForm.controls.address.valid && (checkForm.controls.address.dirty)"
+                   formControlName="address" [(ngModel)]="paymentData.address"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!checkForm.controls.address.valid && !checkForm.controls.address.pending && (checkForm.controls.address.dirty)">
+        <p>Длина от 8 до 128 символов</p>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Квартира</ion-label>
+        <ion-input type="text" placeholder="1" formControlName="room"
+                   [class.invalid]="!checkForm.controls.room.valid && (checkForm.controls.room.dirty)"
+                   [(ngModel)]="paymentData.room"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!checkForm.controls.room.valid && !checkForm.controls.room.pending && (checkForm.controls.room.dirty)">
+        <p>Длина от 1 до 4 символов</p>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Этаж</ion-label>
+        <ion-input type="text" placeholder="5" formControlName="level"
+                   [class.invalid]="!checkForm.controls.level.valid && (checkForm.controls.level.dirty)"
+                   [(ngModel)]="paymentData.level"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!checkForm.controls.level.valid && !checkForm.controls.level.pending && (checkForm.controls.level.dirty)">
+        <p>Длина от 1 до 4 символов</p>
+      </ion-item>
+    </ion-list>
+    <div padding>
+
+      <button ion-button block (click)="submitPayment()"
+              [disabled]="!checkForm.valid">
+        Заказать
+      </button>
+    </div>
+    </form>
+
+</ion-content>

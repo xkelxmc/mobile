@@ -1,0 +1,123 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+
+.bar-cart{
+  span.count {
+    right: 20px;
+    top: 0;
+    position: absolute;
+    height: 14px;
+    padding: 0 5px;
+    font-size: 10px;
+    line-height: 14px;
+    color: #fff;
+    background: #F84F00;
+    border-radius: 7px;
+  }
+}
+
+a{
+  text-decoration: none;
+}
+.vertical {
+  display: table;
+  height: 100%;
+  width: 100%;
+  .vertical-center {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder() {
+  @include optional-at-root('.text-input::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('.text-input:-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('.text-input::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('.text-input:-ms-input-placeholder') {
+    @content;
+  }
+}
+
+.toast-md.success .toast-wrapper{
+  background-color: #4caf50;
+}
+.toast-md.error .toast-wrapper{
+  background-color: #ff9800;
+}
+
+.center{
+  text-align: center;
+}
+.ev-text{
+  display: table;
+  min-height: 80px;
+  width: 100%;
+  .ev-vertical{
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+.btn-all {
+  text-align: center;
+  margin: 15px 0;
+  cursor: pointer;
+  color: #2153DA;
+}
+.slide-fl{
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+ion-header{
+  ion-buttons{
+    button{
+      ion-icon{
+        &.ion-md-close{
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+}

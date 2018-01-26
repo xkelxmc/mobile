@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Моя карта</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div *ngIf="userAuth && userData">
+    <h3 class="card-h"><ion-icon name="card"></ion-icon> {{userData.cardFormat}}</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <img src="https://legendcity.ru/api/card.php?card={{userData.card}}">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12 class="center-img">
+          <img src="https://legendcity.ru/api/code.php?card={{userData.card}}">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

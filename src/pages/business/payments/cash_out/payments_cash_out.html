@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Вывод</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <h3>Выберете счет для вывода</h3>
+  <div *ngIf="!paymentsList" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="paymentsList" class="inner-bg">
+    <div *ngIf="paymentsList.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{paymentsList.events[0].text}}</div>
+    </div>
+    <div *ngIf="paymentsList.status == 'ok'">
+      <div *ngIf="!paymentsList.data || paymentsList.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{paymentsList.events[0].text}}</div>
+      </div>
+      <div *ngIf="paymentsList.data && paymentsList.data.length > 0">
+
+        <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="paymentsList">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <div class="pro-content">
+          <div *ngFor="let item of paymentsList.data">
+
+            <a class="item-history" *ngIf="item.active == 1" (click)="openEnterModal(item.id, item)">
+              <div class="img" [ngStyle]="{'background-image': 'url('+ item.logo +')'}"></div>
+              <div class="info">
+                <div class="date">{{item.type_name}}</div>
+                <div class="date">{{item.name}} {{item.surname}}</div>
+                <div class="name">{{item.number}}</div>
+                <div class="result">
+                  <small>Комиссия:</small>
+                  {{item.type_commission}}%
+                </div>
+                <div class="result">
+                  <small>Мин. сумма:</small>
+                  {{item.type_start_price}} Руб.
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

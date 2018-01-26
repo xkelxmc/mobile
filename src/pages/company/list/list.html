@@ -1,0 +1,70 @@
+<!--
+  Generated template for the CompanyListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>
+      {{categoryName}}
+    </ion-title>
+    <ion-buttons end>
+      <button (click)="changeOption()" ion-button icon-only>
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Потяните для обновления"
+      refreshingText="Обновление...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!listCompany" class="center ev-text">
+    <div class="ev-vertical">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div *ngIf="listCompany">
+    <div *ngIf="listCompany.status == 'error'" class="center ev-text">
+      <div class="ev-vertical">{{listCompany.events[0].text}}</div>
+    </div>
+    <div *ngIf="listCompany.status == 'ok'">
+      <div *ngIf="listCompany.data.length == 0" class="center ev-text">
+        <div class="ev-vertical">{{listCompany.events[0].text}}</div>
+      </div>
+      <div *ngIf="listCompany.data && listCompany.data.length > 0">
+        <div class="company" *ngFor="let company of listCompany.data; let i = index">
+          <a (click)="goCompanyPage(company.id)">
+            <div class="img" [ngStyle]="{'background-image': 'url(' + company.logo + ')'}">
+              <div class="star" *ngIf="company.rating" [ngStyle]="{'background-color': company.color}">
+                <small>{{company.rating}}</small>
+              </div>
+            </div>
+            <div class="info">
+              <div>{{company.name}}</div>
+              <small>{{company.discount_info}}</small>
+              <span>{{company.description}}</span>
+            </div>
+            <ul *ngIf="company.rating">
+              <li>{{company.reviews}} {{company.reviews_text}}</li>
+            </ul>
+            <div *ngIf="company.rating" class="company-rating">
+               <span class="stars">
+                   <span [ngStyle]="{ 'width': getStars(company.rating) }"></span>
+               </span>
+            </div>
+          </a>
+          <button *ngIf="userAuth" (click)="toggleSubscribe(company.id, i)" [ngClass]="{'active': (company.subscribe == 1)}"><ion-icon name="heart"></ion-icon></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

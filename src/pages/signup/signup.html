@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Регистрация</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-bounce>
+  <div class="bg-login vertical">
+
+    <div class="vertical-center">
+
+      <div class="form-content">
+        <h2>Становление «Легендой»</h2>
+        <form [formGroup]="firstForm" *ngIf="step == 1">
+          <div class="form-group phone">
+            <span><ion-icon name="call"></ion-icon></span>
+            <div class="seven"><div>+7</div></div>
+            <ion-input type="number" placeholder="" autocomplete="off" [readonly]="step != 1" formControlName="login" [autocomplete]="off" [(ngModel)]="userData.login"></ion-input>
+          </div>
+          <div class="form-group">
+            <span><ion-icon name="mail"></ion-icon></span>
+            <ion-input type="email" placeholder="email@example.ru" autocomplete="off" [readonly]="step != 1" formControlName="email" [autocomplete]="off" [(ngModel)]="userData.email"></ion-input>
+          </div>
+          <div class="form-group">
+            <span><ion-icon name="card"></ion-icon></span>
+            <ion-input type="number" placeholder="Номер карты" autocomplete="off" [readonly]="step != 1" formControlName="card" [autocomplete]="off" [(ngModel)]="userData.card"></ion-input>
+          </div>
+
+          <div class="form-group">
+            <span><ion-icon name="lock"></ion-icon></span>
+            <ion-input type="number" placeholder="Код регистрации" autocomplete="off" [readonly]="step != 1" formControlName="code" [autocomplete]="off" [(ngModel)]="userData.code"></ion-input>
+          </div>
+        </form>
+        <form [formGroup]="checkCodeForm" *ngIf="step == 2">
+          <div class="form-group">
+            <span><ion-icon name="lock"></ion-icon></span>
+            <ion-input type="number" placeholder="Код" autocomplete="off" formControlName="key" [autocomplete]="off" [(ngModel)]="userData.key"></ion-input>
+          </div>
+        </form>
+
+        <form [formGroup]="passwordForm" *ngIf="step == 3">
+          <div class="form-group clearfix">
+            <span><ion-icon name="person"></ion-icon></span>
+            <ion-item class="inpt-user">
+              <ion-input type="text" placeholder="Имя" formControlName="name" [(ngModel)]="userData.name"></ion-input>
+            </ion-item>
+            <ion-item class="inpt-user">
+              <ion-input type="text" placeholder="Фамилия" formControlName="surname" [(ngModel)]="userData.surname"></ion-input>
+            </ion-item>
+          </div>
+          <div class="form-group">
+            <ion-select formControlName="gender" [(ngModel)]="userData.gender" placeholder="Выбирет пол">
+              <ion-option value="M">Мужчина</ion-option>
+              <ion-option value="F">Женщина</ion-option>
+            </ion-select>
+          </div>
+          <div class="form-group">
+            <span><ion-icon name="lock"></ion-icon></span>
+            <ion-input type="password" placeholder="Пароль" autocomplete="off" formControlName="password" [autocomplete]="off" [(ngModel)]="userData.password"></ion-input>
+          </div>
+          <div class="form-group">
+            <span><ion-icon name="lock"></ion-icon></span>
+            <ion-input type="password" placeholder="Повторите пароль" autocomplete="off" formControlName="confirm_password" [autocomplete]="off" [(ngModel)]="userData.confirm_password"></ion-input>
+          </div>
+          <label class="form-checkbox">
+            <input formControlName="privacy" type="checkbox">
+            <span>Согласен на обработку</span>
+          </label>
+          <a (click)="openWithSystemBrowser('https://legendcity.ru/docs/politica-confidecialnosti.pdf')" class="link-data">персональных данных</a>
+        </form>
+
+        <div class="form-footer">
+          <a class="link" (click)="noregcode()" *ngIf="step == 1">Нет кода регистрации?</a>
+          <a class="link" (click)="back()" *ngIf="step != 1">Начать заново</a>
+          <button (click)="signup()" [disabled]="(!firstForm.valid && step == 1) || ((!firstForm.valid || !checkCodeForm.valid) && step == 2) || ((!firstForm.valid || !passwordForm.valid) && step == 3)">Далее</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-signup vertical" style="display: none;">
+    <div class="vertical-center">
+      <h2>Становление «Легендой»</h2>
+      <div class="form-content">
+        <div class="form-group clearfix">
+          <span><ion-icon name="person"></ion-icon></span>
+          <ion-item class="inpt-user">
+            <ion-input type="text" placeholder="Имя" [(ngModel)]="userData.name"></ion-input>
+          </ion-item>
+          <ion-item class="inpt-user">
+            <ion-input type="text" placeholder="Фамилия" [(ngModel)]="userData.surname"></ion-input>
+          </ion-item>
+        </div>
+        <div class="form-group">
+          <label>Ваш пол?</label>
+          <ion-select [(ngModel)]="userData.gender" placeholder="Выбирет пол">
+            <ion-option value="m">Мужчина</ion-option>
+            <ion-option value="f">Женщина</ion-option>
+          </ion-select>
+          <label class="form-checkbox">
+            <input type="checkbox">
+            <span>Согласен на обработку персональных данных</span>
+          </label>
+        </div>
+        <div class="form-footer">
+          <a href="#" class="link" (click)="login()">У вас есть аккаунт?</a>
+          <button>Далее</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
